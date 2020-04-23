@@ -1,6 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import seaborn as sns
 from matplotlib.ticker import PercentFormatter
 import datetime
 import time
@@ -40,7 +39,7 @@ N = len(data)
 prev_ns = list()  # resets after each game
 
 # size = (18, 6)  # horizontal
-size = (10, 14)  # vertical
+size = (8, 11.5)  # vertical
 
 Y = 'Yes'
 
@@ -74,21 +73,21 @@ Play this game to find out!""")
         while c3:
             # print('The day is ', date[0], '.', sep='')  # temporary
 
-            believed_loc = input("""Enter 't' for top, 'b' for bottom, or 'q' to quit.\n""")
+            believed_loc = input("""Enter 't' for top, 'b' for bottom, or 'q' to quit.\n\n\n\n\n\n""")
 
             if believed_loc  == loc_of_real[0][0]:  # final [0] for first letter 't'
                 print('Correct :)')
                 correct += 1
+                attempted += 1
                 c3 = False
             elif believed_loc == loc_of_random[0][0]:  # final [0] for first letter 't'
                 print('Incorrect :(')
+                attempted += 1
                 c3 = False
             elif believed_loc == 'q':
                 print('You successfully quit the game.')
                 c3 = False
                 continue_cond = False
-
-        attempted += 1
 
         print('The S&P 500 was on the ', loc_of_real[0], ', the day was ', date[0], '.', sep='')
         print('The random walk was on the ', loc_of_random[0], '.', sep='')
@@ -103,10 +102,10 @@ Play this game to find out!""")
         print('The probability of performing at least this well by random guessing is:',
               "{0:.2%}".format(p))
         if p < 0.05:
-            print('At the 5% significance level, you CAN tell the difference. AMAZING!')
+            print('This means that, at the 5% significance level, you CAN tell the difference. AMAZING!')
 
         else:
-            print('At the 5% significance level, you cannot tell the difference, SAD!')
+            print('This means that, at the 5% significance level, you cannot tell the difference, SAD!')
             # insert probability of a false negative here
         print()
 
