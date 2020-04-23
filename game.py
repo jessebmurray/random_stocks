@@ -72,12 +72,15 @@ Play this game to find out!""")
         # believed_loc = input("""Enter 'left' or 'right'.\n""")  # horizontal
         c3 = True
         while c3:
-            believed_loc = input("""Enter 'top' or 'bottom', or 'q' to quit.\n""")
-            if believed_loc  == loc_of_real[0]:
+            # print('The day is ', date[0], '.', sep='')  # temporary
+
+            believed_loc = input("""Enter 't' for top, 'b' for bottom, or 'q' to quit.\n""")
+
+            if believed_loc  == loc_of_real[0][0]:  # final [0] for first letter 't'
                 print('Correct :)')
                 correct += 1
                 c3 = False
-            elif believed_loc == loc_of_random[0]:
+            elif believed_loc == loc_of_random[0][0]:  # final [0] for first letter 't'
                 print('Incorrect :(')
                 c3 = False
             elif believed_loc == 'q':
@@ -93,7 +96,18 @@ Play this game to find out!""")
         time.sleep(1.5)
 
         print()
-        print('You\'ve gotten {} out of {} correct!'.format(correct, attempted))
+        print('You\'ve gotten {} out of {} correct, or '.format(correct, attempted),
+              '{0:.1%}'.format(correct / attempted), '!', sep='')
+
+        p = p_value(n_correct=correct, n_trials=attempted)
+        print('The probability of performing at least this well by random guessing is:',
+              "{0:.2%}".format(p))
+        if p < 0.05:
+            print('At the 5% significance level, you CAN tell the difference. AMAZING!')
+
+        else:
+            print('At the 5% significance level, you cannot tell the difference, SAD!')
+            # insert probability of a false negative here
         print()
 
         time.sleep(1.5)
@@ -106,6 +120,7 @@ Play this game to find out!""")
             print('~~~~~~~~~~~~~~', end='')
             print(' NEW ROUND ', end='')
             print('~~~~~~~~~~~~~~')
+            print()
 
 
 
