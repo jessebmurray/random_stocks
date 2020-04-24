@@ -4,7 +4,11 @@ from matplotlib.ticker import PercentFormatter
 import datetime
 import time
 from scipy.special import comb
+import warnings
 
+
+warnings.filterwarnings("ignore", category=RuntimeWarning)  # warns for opening >20 plots but we don't open them, we
+                                                            # write to the disk - so it's a false positive
 
 plt.style.use('default')
 plt.style.use('default')
@@ -12,6 +16,7 @@ plt.style.use('default')
 ## Import data
 data = np.load('data.npy')
 trading_dates = np.load('trading_dates.npy')
+threses = np.load('threses.npy')
 
 ## Visual constants
 minute_interval = 90
@@ -91,6 +96,7 @@ Play this game to find out!""")
 
         print('The S&P 500 was on the ', loc_of_real[0], ', the day was ', date[0], '.', sep='')
         print('The random walk was on the ', loc_of_random[0], '.', sep='')
+        sigbar(score=correct / attempted, thres=threses[attempted - 1])
 
         time.sleep(1.5)
 
@@ -161,6 +167,28 @@ def plot_stock(axis, x, y):
     axis.fill_between(x, np.full(len(x), lims[0]), y, alpha=0.1, color=color)
     axis.set_xticks(time_ids)
     axis.set_xticklabels(times)
+
+
+def sigbar(score, thres):
+    bit = 0.007
+    spacing = 0.1
+    plt.figure(figsize=(9, 1.2))
+    alpha = 0.5
+    if thres != thres:
+        thres = 1 + bit
+    plt.barh(0, thres + bit, left=-bit, color='C3', alpha=alpha, label='Can\'t Tell')
+    plt.barh(0, 1 + bit - thres, left=thres, color='C0', alpha=alpha, label='Can Tell')
+    plt.yticks([])
+    plt.xticks(np.arange(0, 1 + spacing, spacing))
+    plt.xlim(0 - bit, 1 + bit)
+    plt.scatter(score, 0, marker='v', s=400, color='xkcd:dark grey', alpha=1, label='Your Score')
+    plt.gca().xaxis.set_major_formatter(PercentFormatter(1))
+    plt.title('Is your score due to random chance, or can you tell the difference?',
+              fontsize=14, pad=14)
+    plt.legend(bbox_to_anchor=(1.07, 1), loc=2, borderaxespad=-1.2,
+               markerscale=0.6)
+    plt.tight_layout()
+    plt.savefig('bar.png', dpi=180)
 
 
 def get_side(num):
