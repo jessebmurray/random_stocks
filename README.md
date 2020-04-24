@@ -7,5 +7,8 @@ You just need to run `game.py` which loads data from the `.npy` files. An intera
 
 <img src="hack.png" width="60%">
 
+<img src="bar.png" width="90%">
 
 I'm likely about to purchase minute by minute data on the S&P 500 from 2004, giving this game a repository of ~4,000 trading days to choose from. 
+
+
