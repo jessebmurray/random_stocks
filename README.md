@@ -11,4 +11,5 @@ You just need to run `game.py` which loads data from the `.npy` files. An intera
 
 I'm likely about to purchase minute by minute data on the S&P 500 from 2004, giving this game a repository of ~4,000 trading days to choose from. 
 
+If you want to read more, go to [random_walk.ipynb](random_walk.ipynb).
 
